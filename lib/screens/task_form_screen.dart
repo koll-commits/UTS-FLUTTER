@@ -9,16 +9,19 @@ class TaskFormScreen extends StatefulWidget {
   @override
   State<TaskFormScreen> createState() => _TaskFormScreenState();
 }
-
+//UTS 14 Oktober 2026 - Menambah Controller untuk deskripsi
 class _TaskFormScreenState extends State<TaskFormScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _courseController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
 
+// UTS 14 Oktober 2026 - menambah dispose untuk description controller
   @override
   void dispose() {
     _titleController.dispose();
     _courseController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
@@ -29,6 +32,7 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
       id: DateTime.now().microsecondsSinceEpoch.toString(),
       title: _titleController.text.trim(),
       course: _courseController.text.trim(),
+      description: _descriptionController.text.trim(),
     );
     Navigator.pop(context, task);
   }
@@ -36,7 +40,14 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Tambah Tugas')),
+      appBar: AppBar(
+          title: const Text(
+            'Tambah Tugas',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: const Color.fromARGB(255, 28, 49, 126),
+          foregroundColor: Colors.white,
+        ),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(20),
@@ -58,10 +69,11 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
                       hintText: 'Contoh: Membuat halaman profil',
                     ),
                     textCapitalization: TextCapitalization.sentences,
-                    validator: (String? value) =>
-                        value == null || value.trim().isEmpty
-                            ? 'Judul tugas wajib diisi.'
-                            : null,
+                    validator:
+                        (String? value) =>
+                            value == null || value.trim().isEmpty
+                                ? 'Judul tugas wajib diisi.'
+                                : null,
                   ),
                   const SizedBox(height: 14),
                   TextFormField(
@@ -72,10 +84,23 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
                       hintText: 'Contoh: Pemrograman Perangkat Bergerak',
                     ),
                     textCapitalization: TextCapitalization.words,
-                    validator: (String? value) =>
-                        value == null || value.trim().isEmpty
-                            ? 'Mata kuliah wajib diisi.'
-                            : null,
+                    validator:
+                        (String? value) =>
+                            value == null || value.trim().isEmpty
+                                ? 'Mata kuliah wajib diisi.'
+                                : null,
+                  ),
+                  const SizedBox(height: 14),
+                  // UTS 14 Oktober 2026 - Menambah form field Deskripsi
+                  TextFormField(
+                    key: const Key('task-description-field'),
+                    controller: _descriptionController,
+                    decoration: const InputDecoration(
+                      labelText: 'Deskripsi',
+                      hintText:
+                          'Contoh: Membuat laporan praktikum yang saya kerjakan',
+                    ),
+                    textCapitalization: TextCapitalization.sentences
                   ),
                 ],
               ),

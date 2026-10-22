@@ -1,3 +1,4 @@
+// UTS | Datetime: 2026-10-12 (teks dibatasi agar tidak overflow di 360 px)
 import 'package:flutter/material.dart';
 
 import '../models/task.dart';
@@ -34,7 +35,6 @@ class TaskCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      // UTS 13 Oktober 2026 - batasi 2 baris agar tidak overflow
                       task.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -46,12 +46,16 @@ class TaskCard extends StatelessWidget {
                           ),
                     ),
                     const SizedBox(height: 7),
+                    Text(task.course, maxLines: 1, overflow: TextOverflow.ellipsis),
+                    const SizedBox(height: 7),
+                    // UTS 14 Oktober 2026 - Menambah Deskripsi di Detail Tugas
                     Text(
-                      task.course,
-                      maxLines: 1,
+                      task.description,
+                      maxLines: 3,
                       overflow: TextOverflow.ellipsis,
-                      ),
-                    const SizedBox(height: 10),
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith()      
+                    ),
+                    const SizedBox(height: 20),
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 10,
